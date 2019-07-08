@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CardList from './CardList'
+import App from './App';
 import './index.css';
 import 'tachyons';
-import {robots} from './robots';
 
 ReactDOM.render(
-  <CardList robots={robots} />,
+ <App />,
   document.getElementById('root')
 );
