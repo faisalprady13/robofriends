@@ -4,12 +4,14 @@ import CardList from './CardList';
 import SearchBox from './SearchBox';
 import './App.css';
 import axios from 'axios';
+import Scroll from './Scroll';
 
 const App = () => {
 	const [searchField, setSearchField] = useState('');
 	//this robot const is array
 	const [robotsList, setRobotsList] = useState([]);
 
+	//empty array for one execution = componentDidMount
 	useEffect(() => {
 		axios.get('https://jsonplaceholder.typicode.com/users')
 		.then(response => response.data)
@@ -32,7 +34,9 @@ const App = () => {
 			<div className='tc'>
 				<h1 className='f1'> Robofriends </h1>
 				<SearchBox searchChange={val => onSearchChange(val)}/>
-				<CardList robots={robotsList} />
+				<Scroll>
+					<CardList robots={robotsList} />
+				</Scroll>
 			</div>
 		);
 	}
