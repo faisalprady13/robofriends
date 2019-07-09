@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import CardList from './CardList';
-import SearchBox from './SearchBox';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
 import './App.css';
 import axios from 'axios';
-import Scroll from './Scroll';
+import Scroll from '../components/Scroll';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 const App = () => {
 	const [searchField, setSearchField] = useState('');
@@ -23,23 +24,23 @@ const App = () => {
 	const onSearchChange = (event) => {
 		setSearchField(event.target.value);
 		setRobotsList(robotsList.filter(value => {
-			return value.name.toLowerCase().includes(searchField);
+			return value.name.toLowerCase().includes(searchField.toLocaleLowerCase());
 		}));
 	}
 
-	if(robotsList.length === 0){
-		return <h1>Loading</h1>
-	}else{
-		return (
+	return !robotsList.length ?
+		<h1>Loading</h1> : 
+		(
 			<div className='tc'>
 				<h1 className='f1'> Robofriends </h1>
 				<SearchBox searchChange={val => onSearchChange(val)}/>
 				<Scroll>
-					<CardList robots={robotsList} />
+					<ErrorBoundary>
+						<CardList robots={robotsList} />
+					</ErrorBoundary>
 				</Scroll>
 			</div>
 		);
-	}
 }
 
 export default App;
